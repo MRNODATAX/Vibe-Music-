@@ -145,14 +145,12 @@ export const usePlayer = create<PlayerState>()(
       },
 
       addToQueue: (track) => {
-        const { queue, index, isPlaying } = get();
+        const { queue } = get();
         if (queue.length === 0) {
           set({ queue: [track], index: 0, isPlaying: true, progress: 0 });
           return;
         }
-        set({ queue: [...queue, track], isPlaying });
-        if (!isPlaying) set({ isPlaying: true });
-        void index;
+        set({ queue: [...queue, track] });
       },
 
       playNext: (track) => {
