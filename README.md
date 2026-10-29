@@ -14,6 +14,7 @@ dan mobile, bisa dipasang ke layar utama dan tetap jalan saat offline.
 
 ## Daftar isi
 
+0. [Splash & branding nodata.dev](#splash--branding-nodatadev)
 1. [Apa yang dibangun](#apa-yang-dibangun)
 2. [Referensi & cara kerja](#referensi--cara-kerja)
 3. [Menjalankan proyek](#menjalankan-proyek)
@@ -28,12 +29,32 @@ dan mobile, bisa dipasang ke layar utama dan tetap jalan saat offline.
 
 ---
 
+## Splash & branding nodata.dev
+
+Saat aplikasi dibuka, muncul **layar boot** (`src/components/BootSplash.tsx`) dengan:
+
+- logo Vibe Music + wordmark, dan **tulisan kecil `nodata.dev`** tepat di bawahnya
+  (juga tampil di sidebar, di kaki halaman Beranda, dan di footer dialog Pengaturan);
+- **progress bar animasi** dengan persentase besar, kilau bergerak, dan garis status
+  bertahap ("Menyalakan mesin audio" → "Memuat katalog lagu" → … → "Hampir siap");
+- progress-nya **nyata**: menunggu font siap + event `load`, ditambah durasi minimum
+  agar tidak berkedip (≈1,25 s kunjungan pertama, ≈0,5 s kunjungan berikutnya dalam
+  sesi yang sama);
+- **interaktif / bisa dilewati**: klik di mana saja, ketuk, tekan tombol apa pun, atau
+  pakai tombol **Lewati** — semuanya melompat ke 100% dengan transisi memudar;
+- menghormati `prefers-reduced-motion`, punya `role="progressbar"` + `aria-valuenow`,
+  dan tautan `nodata.dev` bisa diklik (membuka tab baru).
+
+---
+
 ## Apa yang dibangun
 
 - **Aplikasi web penuh** dengan alur layaknya layanan streaming: Beranda, Pencarian,
   Perpustakaan, Playlist, Album, Artis, Lagu yang disukai.
 - **PWA** dengan manifest, ikon (regular + maskable + Apple touch), service worker
   (app shell offline + cache aset), shortcut aplikasi, dan tema warna dinamis.
+- **Splash screen** dengan progress loading animasi + skip interaktif, dan branding
+  `nodata.dev` di bawah wordmark.
 - **Player** lengkap: play/pause, next/prev, shuffle, repeat (off/all/one), seek, volume,
   mute, antrean, now-playing layar penuh, Media Session (kontrol di lock screen/OS).
 - **Desain kaca (glassmorphism)** dengan tiga tingkat intensitas, warna aksen dinamis mengikuti
@@ -193,12 +214,25 @@ src/
 Tujuannya: demo yang terasa hidup, deterministik per lagu, ringan (tanpa file audio),
 dan tidak melanggar hak cipta.
 
-## Batasan
+## Batasan, API musik & iklan
 
-- Ini **bukan** klien Spotify: tidak ada login, API, atau katalog Spotify. Semua data fiktif.
-- Audio adalah sintesis generatif, bukan rekaman lagu sungguhan.
-- Riwayat/like/playlist disimpan lokal (localStorage), belum tersinkron antar perangkat.
-- Pencarian berjalan di memori katalog; cukup untuk demo, bukan skala produksi.
+Pertanyaan seperti **"ada API musiknya?", "ada iklan saat memutar?", "apakah saya
+harus menambahkan API musik sendiri?"** dijawab lengkap di
+**[docs/music-api.md](docs/music-api.md)**, termasuk: kenapa API Spotify tidak bisa
+dipakai untuk kloning, daftar sumber musik legal (Jamendo, Audius, FMA, katalog
+sendiri, self-host Navidrome), contoh endpoint proxy, checklist CORS/Range/HLS,
+serta urutan opsi monetisasi (sponsor kartu → membership → iklan audio).
+
+Ringkasnya:
+
+- **Tidak ada API musik.** Katalog lokal fiktif + audio disintesis di perangkat
+  (Web Audio). Tidak ada backend.
+- **Tidak ada iklan**, juga tidak ada tracker/analytics pihak ketiga.
+- **Untuk musik nyata, ya, kamu perlu menambahkan sumber API sendiri** — sambungkan
+  lewat field `audioUrl` per track (jalur cepat) atau adapter + endpoint proxy
+  server-side (jalur produksi). Store player tidak perlu diubah.
+- Batasan demo: tanpa login, data tersimpan lokal (localStorage), pencarian di memori,
+  dan audio bukan rekaman sungguhan.
 
 ## Lisensi & kredit
 

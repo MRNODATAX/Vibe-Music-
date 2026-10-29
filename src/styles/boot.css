@@ -1,0 +1,377 @@
+/* ==========================================================================
+   Vibe Music — boot splash (first-paint loading screen)
+   ========================================================================== */
+
+.boot {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  padding: 24px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, #191328 0%, #08080f 58%, #04040a 100%);
+  isolation: isolate;
+  cursor: pointer;
+  animation: boot-in 0.28s var(--ease);
+  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), filter 0.5s var(--ease);
+}
+
+.boot.is-leaving {
+  opacity: 0;
+  transform: scale(1.03);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+@keyframes boot-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* -------------------------------------------------------------- aurora */
+.boot-aurora {
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.boot-aurora span {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle at 35% 35%, var(--accent-2), transparent 70%);
+  animation: boot-drift 16s ease-in-out infinite;
+}
+
+.boot-aurora span:nth-child(1) {
+  width: 46vw;
+  height: 46vw;
+  top: 2%;
+  left: -10%;
+  animation-duration: 19s;
+}
+
+.boot-aurora span:nth-child(2) {
+  width: 38vw;
+  height: 38vw;
+  right: -12%;
+  bottom: 6%;
+  opacity: 0.3;
+  background: radial-gradient(circle at 40% 40%, var(--accent), transparent 70%);
+  animation-duration: 23s;
+  animation-delay: -6s;
+}
+
+.boot-aurora span:nth-child(3) {
+  width: 26vw;
+  height: 26vw;
+  left: 44%;
+  top: 40%;
+  opacity: 0.22;
+  animation-duration: 27s;
+  animation-delay: -12s;
+}
+
+@keyframes boot-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(3vw, -4vh, 0) scale(1.12);
+  }
+}
+
+/* ---------------------------------------------------------------- card */
+.boot-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  width: min(420px, 100%);
+  padding: 30px 26px 22px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.02) 48%, rgba(255, 255, 255, 0.06)),
+    rgba(16, 16, 26, 0.55);
+  box-shadow: 0 34px 90px rgba(0, 0, 0, 0.62), inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(30px) saturate(150%);
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  animation: boot-card-in 0.5s var(--ease);
+}
+
+@keyframes boot-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.boot-brand {
+  display: flex;
+  justify-content: center;
+}
+
+/* the splash wordmark is bigger than the sidebar one */
+.brand--lg .brand-mark {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+}
+
+.brand--lg .brand-row {
+  gap: 13px;
+}
+
+.brand--lg .brand-word {
+  font-size: 26px;
+}
+
+.brand--lg .brand-tagline {
+  font-size: 11px;
+}
+
+/* ---------------------------------------------------------------- wave */
+.boot-wave {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 20px;
+  margin-top: -4px;
+}
+
+.boot-wave i {
+  width: 3px;
+  height: 30%;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+  box-shadow: 0 0 10px var(--accent-glow);
+  animation: boot-wave 1.1s ease-in-out infinite;
+}
+
+.boot-wave i:nth-child(2) {
+  animation-delay: 0.09s;
+}
+.boot-wave i:nth-child(3) {
+  animation-delay: 0.18s;
+}
+.boot-wave i:nth-child(4) {
+  animation-delay: 0.27s;
+}
+.boot-wave i:nth-child(5) {
+  animation-delay: 0.36s;
+}
+.boot-wave i:nth-child(6) {
+  animation-delay: 0.45s;
+}
+.boot-wave i:nth-child(7) {
+  animation-delay: 0.54s;
+}
+
+@keyframes boot-wave {
+  0%,
+  100% {
+    height: 22%;
+    opacity: 0.6;
+  }
+  50% {
+    height: 100%;
+    opacity: 1;
+  }
+}
+
+/* ------------------------------------------------------------ progress */
+.boot-progress {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.boot-bar {
+  position: relative;
+  height: 7px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+.boot-bar-fill {
+  position: relative;
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2) 70%, #ffffff);
+  box-shadow: 0 0 16px var(--accent-glow), 0 0 4px var(--accent-2);
+  transition: width 0.24s linear;
+}
+
+.boot-bar-glint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: translateX(-100%);
+  animation: boot-glint 1.5s ease-in-out infinite;
+}
+
+@keyframes boot-glint {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.boot-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.boot-label {
+  font-size: 12px;
+  color: var(--text-2);
+  letter-spacing: 0.01em;
+  min-height: 16px;
+  transition: opacity 0.2s var(--ease);
+}
+
+.boot-percent {
+  font-size: 15px;
+  font-weight: 720;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.boot-percent small {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-3);
+  margin-left: 1px;
+}
+
+/* -------------------------------------------------------------- actions */
+.boot-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.boot-skip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  font-size: 12.5px;
+  font-weight: 620;
+  color: var(--text);
+  border: 1px solid var(--stroke);
+  background: rgba(255, 255, 255, 0.07);
+  transition: background 0.18s var(--ease), transform 0.18s var(--ease), border-color 0.18s var(--ease);
+  cursor: pointer;
+}
+
+.boot-skip:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--stroke-strong);
+  transform: translateY(-1px);
+}
+
+.boot-skip:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.boot-skip:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.boot-hint {
+  font-size: 10.5px;
+  color: var(--text-3);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.boot-foot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-3);
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.boot-foot a {
+  color: var(--text-2);
+  border-bottom: 1px solid var(--accent-line);
+  padding-bottom: 1px;
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.boot-foot a:hover {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
+.boot-dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.6;
+}
+
+@media (max-width: 560px) {
+  .boot-card {
+    padding: 26px 20px 18px;
+    border-radius: 24px;
+    gap: 16px;
+  }
+  .brand--lg .brand-mark {
+    width: 40px;
+    height: 40px;
+  }
+  .brand--lg .brand-word {
+    font-size: 22px;
+  }
+  .boot-foot {
+    font-size: 10.5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-aurora span,
+  .boot-wave i,
+  .boot-bar-glint {
+    animation: none;
+  }
+}

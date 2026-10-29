@@ -150,8 +150,61 @@ html[data-motion="reduced"] .bg-orb {
 
 .brand {
   display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  min-width: 0;
+}
+
+.brand.is-compact {
+  align-items: center;
+}
+
+.brand-row {
+  display: inline-flex;
   align-items: center;
   gap: 10px;
+  min-width: 0;
+}
+
+.brand-tagline-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding-left: 42px;
+  max-width: 100%;
+}
+
+.brand-rule {
+  display: block;
+  width: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  flex: 0 0 auto;
+}
+
+.brand-rule:last-child {
+  width: 6px;
+  background: linear-gradient(90deg, transparent, var(--accent-line));
+}
+
+.brand-tagline {
+  font-size: 10px;
+  font-weight: 560;
+  letter-spacing: 0.12em;
+  text-transform: lowercase;
+  color: var(--text-3);
+  white-space: nowrap;
+  transition: color 0.18s var(--ease), text-shadow 0.2s var(--ease);
+}
+
+.brand-tagline span {
+  color: var(--accent-2);
+}
+
+a.brand-tagline:hover {
+  color: var(--text);
+  text-shadow: 0 0 14px var(--accent-glow);
 }
 
 .brand-mark {
@@ -173,6 +226,11 @@ html[data-motion="reduced"] .bg-orb {
   color: var(--text-3);
   font-weight: 560;
   margin-left: 3px;
+}
+
+.brand-link:hover .brand-word span {
+  color: var(--accent-2);
+  transition: color 0.2s var(--ease);
 }
 
 .side-nav {
@@ -402,6 +460,7 @@ html[data-motion="reduced"] .bg-orb {
 }
 
 .sidebar.is-collapsed .brand-word,
+.sidebar.is-collapsed .brand-tagline-wrap,
 .sidebar.is-collapsed .side-link span,
 .sidebar.is-collapsed .library-title,
 .sidebar.is-collapsed .library-chips,

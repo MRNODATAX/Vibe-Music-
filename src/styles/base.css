@@ -640,6 +640,17 @@ html[data-glass="off"] .glass {
 }
 
 /* -------------------------------------------------------------- utilities */
+.credit-link {
+  color: var(--text-2);
+  border-bottom: 1px solid var(--accent-line);
+  transition: color 0.18s var(--ease), border-color 0.18s var(--ease);
+}
+
+.credit-link:hover {
+  color: var(--accent-2);
+  border-color: var(--accent-2);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

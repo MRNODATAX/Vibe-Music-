@@ -176,7 +176,12 @@ const SettingsDialog = () => {
 
         <footer className="modal-foot">
           <span>Vibe Music 1.0 — PWA glass.</span>
-          <span className="modal-foot-dim">Dibuat dengan Web Audio API + React.</span>
+          <span className="modal-foot-dim">
+            dibuat oleh{" "}
+            <a href="https://nodata.dev" target="_blank" rel="noopener noreferrer" className="credit-link">
+              nodata.dev
+            </a>
+          </span>
         </footer>
       </div>
     </div>

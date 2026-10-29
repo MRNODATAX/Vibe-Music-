@@ -18,6 +18,13 @@ describe("Vibe Music app shell", () => {
     localStorage.clear();
   });
 
+  it("shows the nodata.dev credit under the wordmark", () => {
+    const { container } = renderAt("/");
+    const taglines = Array.from(container.querySelectorAll(".brand-tagline"));
+    expect(taglines.length).toBeGreaterThan(0);
+    expect(taglines[0].textContent).toBe("nodata.dev");
+  });
+
   it("renders the home page with catalog shelves", () => {
     renderAt("/");
     expect(screen.getByRole("heading", { level: 1 })).toBeTruthy();

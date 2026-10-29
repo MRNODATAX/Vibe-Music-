@@ -22,3 +22,7 @@ npm-debug.log*
 
 # TS incremental build info
 *.tsbuildinfo
+
+# local env files
+.env
+.env.local

@@ -222,7 +222,12 @@ const Home = () => {
       </Section>
 
       <footer className="page-foot">
-        <span>Vibe Music</span>
+        <span>
+          Vibe Music ·{" "}
+          <a href="https://nodata.dev" target="_blank" rel="noopener noreferrer" className="credit-link">
+            nodata.dev
+          </a>
+        </span>
         <span>Demo katalog fiktif • audio disintesis di perangkat</span>
       </footer>
     </div>
