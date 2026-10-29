@@ -1,0 +1,62 @@
+{
+  "name": "Vibe Music — pemutar musik glass",
+  "short_name": "Vibe Music",
+  "description": "Jelajahi, cari, dan dengarkan musik dengan antarmuka kaca yang halus. Bisa dipasang di desktop maupun ponsel.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#05050a",
+  "theme_color": "#0a0a10",
+  "lang": "id",
+  "dir": "ltr",
+  "categories": ["music", "entertainment"],
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cari musik",
+      "short_name": "Cari",
+      "url": "/search",
+      "description": "Cari lagu, artis, dan playlist"
+    },
+    {
+      "name": "Lagu yang disukai",
+      "short_name": "Disukai",
+      "url": "/liked",
+      "description": "Buka lagu yang kamu simpan"
+    },
+    {
+      "name": "Perpustakaan",
+      "short_name": "Koleksi",
+      "url": "/library",
+      "description": "Playlist, artis, dan album tersimpan"
+    }
+  ]
+}
