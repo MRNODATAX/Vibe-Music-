@@ -236,6 +236,72 @@ User: "lagu hujan buat kerja"
 | **Napster/Rhapsody, TIDAL, Apple Music catalog penuh** | butuh perjanjian kemitraan komersial |
 | **Endpoint `downloader` milik comiku** (tiktok/capcut/ig) | konten pihak ketiga tanpa lisensi — tidak relevan dan berisiko |
 
+
+---
+
+## 6b. Kasus khusus: "Bukankah API YouTube Music gratis?"
+
+Ini pertanyaan yang paling sering muncul, dan jawabannya: **gratis, tapi bukan untuk
+memutar musik.** Ada tiga hal berbeda yang sering dianggap satu:
+
+| Yang dimaksud | Status | Gratis? | Menghasilkan audio? |
+| --- | --- | --- | --- |
+| **YouTube Data API v3** | ✅ resmi | ✅ $0, tanpa tier berbayar | ❌ metadata saja |
+| **"YouTube Music API"** | ❌ **tidak ada API resmi publik** | — | ❌ (yang beredar = scraper tidak resmi) |
+| **YouTube IFrame Player API** | ✅ resmi | ✅ | ✅ tapi video + iklan + branding, tidak bisa audio-only |
+| Ekstraksi stream (yt-dlp, `ytdl-core`, `ytmusicapi`) | ❌ melanggar ToS | teknis gratis | ✅ tapi rapuh & berisiko hukum |
+
+### (a) YouTube Data API v3 — gratis, tapi kuotanya kecil dan tanpa audio
+
+- Biaya uang: **$0**. Tidak ada tier berbayar; kuota hanya bisa dinaikkan lewat
+  *audit form* yang sering ditolak.
+- Kuota default: **10.000 unit/hari per project**; `search.list` = **100 unit** →
+  praktis **±100 pencarian per hari untuk seluruh project** (bukan per user).
+- Metode murah: `videos.list` / `playlistItems.list` = 1 unit.
+- **Tidak ada endpoint audio sama sekali.** Jadi untuk Vibe DJ nilainya hanya
+  *metadata & discovery* — bukan pemutaran.
+
+### (b) "YouTube Music API" tidak ada versi resminya
+
+YouTube Music **tidak punya API publik**. Semua paket bernama `ytmusic-api`,
+`ytmusicapi`, `node-youtube-music`, dll. adalah pembungkus endpoint internal
+`youtubei/v1/*` dengan client `WEB_REMIX` — tidak didokumentasikan dan melanggar
+YouTube ToS. Jalur resmi yang diakui untuk playback hanyalah **IFrame Player** +
+Data API untuk metadata. Endpoint `/search/ytmusicsearch` milik comiku juga
+membungkus endpoint internal ini, dan hasilnya hanya **saran pencarian** (tanpa audio).
+
+### (c) Kenapa mengekstrak stream makin mustahil (2026)
+
+Bukan sekadar soal aturan — teknisnya juga terus dipatahkan YouTube:
+
+- **SABR** (server-side adaptive bitrate) memaksa client `web` mengembalikan format
+  tanpa URL → unduhan gagal `HTTP 403` (issue resmi yt-dlp).
+- **PO Token** (proof-of-origin) dibuat oleh JS obfuscated di browser asli,
+  **terikat sesi + cepat kedaluwarsa** → skrip tidak bisa menghitungnya sendiri.
+- **nsig / signature cipher** berubah berkala; **bot check** ("Sign in to confirm
+  you're not a bot"); **IP datacenter diblokir** sejak level jaringan.
+- Konsekuensinya: perbaikan bersifat sementara. Komentar praktisi: *"any guide
+  claiming a permanent solution is wrong, including this one in six months."*
+
+### (d) Yang masih boleh & berguna dari YouTube
+
+1. **Deep link** ke YouTube Music / video: `https://music.youtube.com/search?q=…` — 0 biaya, 0 risiko.
+2. **oEmbed** (tanpa key, tanpa kuota): `https://www.youtube.com/oembed?url=<video>&format=json` → judul, author, thumbnail.
+3. **Data API v3** hanya untuk metadata/pencarian skala kecil (≤100 search/hari).
+4. **IFrame Player resmi** di tab terpisah ("Mode Video"): legal, tapi iklan + branding
+   tampil, tidak boleh disembunyikan/dikecilkan di bawah batas minimum, dan tidak bisa
+   dijadikan audio-only. Ini **pengalaman berbeda** dari player Vibe Music.
+
+### (e) Keputusan untuk Vibe Music
+
+- **Tidak** memakai YouTube sebagai sumber audio Vibe DJ. Bukan karena tidak bisa
+  ditulis, tapi karena hasilnya aplikasi yang rusak tiap beberapa minggu dan berisiko
+  takedown — bertentangan dengan tujuan "stabil, gratis, legal".
+- **Boleh** dipakai sebagai *pelengkap*: tombol "Cari versi live/cover di YouTube",
+  atau tab "Mode Video" dengan IFrame resmi (opsional, di balik flag).
+- **Tulang punggung audio tetap Audius** (lagu penuh, resmi, CORS `*`), lalu
+  Openverse CC, pratinjau Deezer/iTunes, dan katalog demo.
+
 ---
 
 ## 7. Rekomendasi langkah (menunggu izinmu)
