@@ -1,6 +1,10 @@
 # PLAN — Vibe DJ: AI music assistant + playable chat bubbles
 
 > **Status dokumen:** rencana (belum ada kode yang ditulis untuk fitur ini).
+> **Update 29 Okt 2026:** keputusan yang sudah diambil — proxy di **Vercel**,
+> provider AI **rantai** (comiku → key user → parser lokal), **SoundCloud tidak dipakai**.
+> Sumber audio sudah diteliti ulang dan **berubah**: lihat **`docs/free-music-api-research.md`**
+> (Audius full-track + Openverse CC + Deezer/iTunes preview + demo lokal).
 > **Tanggal riset:** 29 Okt 2026 · **Target:** Vibe Music (`MRNODATAX/Vibe-Music-`)
 > **Referensi eksternal:** ComikuApi (`comiku.my.id`), `blognodata.vercel.app` (Relay AI),
 > pola Spotify AI DJ & YouTube Music *Ask Music*, aturan SoundCloud API, praktik UX chat widget.
@@ -349,12 +353,19 @@ Desain kode: satu interface `DjProvider { parseIntent(): Promise<Intent>; copy()
 
 ---
 
-## 12. Keputusan yang saya butuh dari kamu sebelum eksekusi
+## 12. Keputusan (sudah dijawab 29 Okt 2026)
 
-1. **Sumber bunyi untuk bubble** — (a) pratinjau 30 dtk Apple Music (paling aman, terasa "nyata"), (b) katalog demo generatif saja (100% offline, tapi bukan lagu asli), (c) keduanya: Apple untuk hasil AI, demo untuk fallback. **Rekomendasi saya: (c).**
-2. **Hosting untuk proxy** — apakah repo ini akan dideploy ke Vercel/Cloudflare (bisa `api/` function), atau harus tetap statis? Kalau statis, AI hanya bisa lewat "key milik user" (opsi B).
-3. **Provider AI default** — comiku deepseek (gratis, tanpa key) atau key Gemini milikmu (stabil, JSON mode)?
-4. **Mode SoundCloud** — aktifkan di balik flag eksperimental, atau tidak sama sekali? **Rekomendasi saya: tidak, sampai ada kebutuhan jelas.**
+1. **Sumber bunyi** → _direvisi setelah riset_ (**`docs/free-music-api-research.md`**):
+   **Audius (lagu penuh, gratis, resmi)** → **Openverse/Jamendo CC** → **Deezer/iTunes pratinjau
+   30 dtk** → **katalog demo lokal**. Preview Apple 30 dtk bukan lagi sumber utama.
+2. **Hosting proxy** → **Vercel** (`api/` serverless functions). Aman untuk CORS, cache, dan
+   menyembunyikan prompt dari URL.
+3. **Provider AI** → **rantai**: `comiku /ai/deepseek` → key user (Gemini/OpenRouter) →
+   parser lokal Indonesia. Fitur inti tetap hidup tanpa AI.
+4. **SoundCloud** → **tidak dipakai** (URL internal, ToS, iklan terlewati, risiko hak cipta).
+
+**Masih menunggu 2 keputusan sebelum eksekusi** (detail di riset §7): apakah lagu berlisensi
+**CC BY-NC-ND (non-komersial)** boleh dipakai, dan apakah akan mendaftarkan **API key Audius gratis**.
 
 ---
 
